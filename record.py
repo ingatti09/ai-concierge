@@ -9,7 +9,8 @@ print("Parla adesso...")
 recording = sd.rec(
     int(seconds * fs),
     samplerate=fs,
-    channels=1
+    channels=1,
+    dtype="int16"
 )
 
 sd.wait()
