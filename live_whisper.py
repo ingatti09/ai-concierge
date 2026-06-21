@@ -1,3 +1,5 @@
+from concierge import rispondi
+
 import sounddevice as sd
 from scipy.io.wavfile import write
 from faster_whisper import WhisperModel
@@ -35,7 +37,17 @@ while True:
 
     segments, info = model.transcribe("audio.wav")
 
-    print("\nHai detto:")
+    testo = ""
 
     for segment in segments:
-        print(segment.text)
+        testo += segment.text
+
+    print("\nCliente:")
+    print(testo)
+
+    risposta = rispondi(testo)
+
+    print("\nConcierge:")
+    print(risposta)
+
+    print("\n" + "-"*40)
