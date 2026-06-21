@@ -1,10 +1,10 @@
-from concierge import rispondi
-
 import sounddevice as sd
+import numpy as np
 from scipy.io.wavfile import write
 from faster_whisper import WhisperModel
 
-print("Caricamento modello...")
+fs = 16000
+seconds = 5
 
 model = WhisperModel(
     "small",
@@ -12,18 +12,11 @@ model = WhisperModel(
     compute_type="int8"
 )
 
-print("Pronto.")
 
-fs = 16000
-
-while True:
-
-    input("\nPremi INVIO per parlare (CTRL+C per uscire)")
-
-    print("Registrazione...")
+def trascrivi_audio():
 
     recording = sd.rec(
-        int(5 * fs),
+        int(seconds * fs),
         samplerate=fs,
         channels=1,
         dtype="int16"
@@ -33,21 +26,8 @@ while True:
 
     write("audio.wav", fs, recording)
 
-    print("Trascrizione...")
+    segments, _ = model.transcribe("audio.wav")
 
-    segments, info = model.transcribe("audio.wav")
+    testo = "".join([s.text for s in segments])
 
-    testo = ""
-
-    for segment in segments:
-        testo += segment.text
-
-    print("\nCliente:")
-    print(testo)
-
-    risposta = rispondi(testo)
-
-    print("\nConcierge:")
-    print(risposta)
-
-    print("\n" + "-"*40)
+    return testo

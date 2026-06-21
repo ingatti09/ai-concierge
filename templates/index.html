@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Concierge</title>
+</head>
+
+<body>
+
+    <h1>AI Concierge</h1>
+
+    <p><b>Stato:</b> {{ stato }}</p>
+
+    <hr>
+
+    <form action="/parla" method="post">
+        <button type="submit">🎤 Parla</button>
+    </form>
+
+    <hr>
+
+    {% if domanda %}
+        <p><b>Cliente:</b> {{ domanda }}</p>
+    {% endif %}
+
+    {% if risposta %}
+        <p><b>Concierge:</b> {{ risposta }}</p>
+    {% endif %}
+
+</body>
+</html>
